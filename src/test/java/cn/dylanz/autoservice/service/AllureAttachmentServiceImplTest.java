@@ -19,8 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class AllureAttachmentServiceImplTest {
     @Autowired
     private AllureAttachmentServiceImpl allureAttachmentService;
-    @Autowired
-    private AllureAttachment allureAttachment;
 
     @Test
     public void testAddAttachment_typeIsTextPlain() {
