@@ -25,10 +25,10 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
 
     @Override
     public Boolean addSteps(AllureSteps allureSteps) {
-        if (allureSteps == null) {
-            return false;
-        }
         try {
+            if (allureSteps == null) {
+                return false;
+            }
             attachInfo(allureSteps);
             attachMethodAndUrl(allureSteps);
             attachRequest(allureSteps);
