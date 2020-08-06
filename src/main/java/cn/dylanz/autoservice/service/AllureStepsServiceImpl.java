@@ -22,8 +22,6 @@ import java.util.List;
 public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps> {
     @Autowired
     private AllureAttachmentServiceImpl allureAttachmentService;
-    @Autowired
-    private AllureAttachment allureAttachment;
 
     @Override
     public Boolean addSteps(AllureSteps allureSteps) {
@@ -49,6 +47,7 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
                 return;
             }
             for (AllureAttachment item : info) {
+                AllureAttachment allureAttachment = new AllureAttachment();
                 allureAttachment.setName(item.getName());
                 allureAttachment.setType(AllureAttachmentTypeEnum.getType(item.getType() == null ? null : item.getType().toString()));
                 allureAttachment.setContent(item.getContent());
@@ -64,6 +63,7 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
         try {
             String method = allureSteps.getMethod().toString();
             String url = allureSteps.getUrl();
+            AllureAttachment allureAttachment = new AllureAttachment();
             allureAttachment.setName(method);
             allureAttachment.setContent(url);
             allureAttachmentService.addAttachment(allureAttachment);
@@ -76,6 +76,7 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
         try {
             JSONObject bodyObject = JSONObject.parseObject(allureSteps.getRequestBody());
             String formattedBody = JSON.toJSONString(bodyObject, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+            AllureAttachment allureAttachment = new AllureAttachment();
             allureAttachment.setName("Request Body");
             allureAttachment.setType(AllureAttachmentTypeEnum.APPLICATION_JSON);
             allureAttachment.setContent(formattedBody);
@@ -84,11 +85,13 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
             try {
                 JSONArray bodyArray = JSONObject.parseArray(allureSteps.getRequestBody());
                 String bodyString = JSON.toJSONString(bodyArray, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+                AllureAttachment allureAttachment = new AllureAttachment();
                 allureAttachment.setName("Request Body");
                 allureAttachment.setType(AllureAttachmentTypeEnum.APPLICATION_JSON);
                 allureAttachment.setContent(bodyString);
                 allureAttachmentService.addAttachment(allureAttachment);
             } catch (Exception exception) {
+                AllureAttachment allureAttachment = new AllureAttachment();
                 allureAttachment.setName("Request Body");
                 allureAttachment.setType(AllureAttachmentTypeEnum.TEXT_PLAIN);
                 allureAttachment.setContent(allureSteps.getRequestBody());
@@ -101,6 +104,7 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
         try {
             JSONObject responseObject = JSONObject.parseObject(allureSteps.getResponse().asString());
             String responseString = JSON.toJSONString(responseObject, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+            AllureAttachment allureAttachment = new AllureAttachment();
             allureAttachment.setName("Response");
             allureAttachment.setType(AllureAttachmentTypeEnum.APPLICATION_JSON);
             allureAttachment.setContent(responseString);
@@ -109,11 +113,13 @@ public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps>
             try {
                 JSONArray responseArray = JSONObject.parseArray(allureSteps.getResponse().asString());
                 String responseString = JSON.toJSONString(responseArray, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+                AllureAttachment allureAttachment = new AllureAttachment();
                 allureAttachment.setName("Response");
                 allureAttachment.setType(AllureAttachmentTypeEnum.APPLICATION_JSON);
                 allureAttachment.setContent(responseString);
                 allureAttachmentService.addAttachment(allureAttachment);
             } catch (Exception exception) {
+                AllureAttachment allureAttachment = new AllureAttachment();
                 allureAttachment.setName("Response");
                 allureAttachment.setType(AllureAttachmentTypeEnum.TEXT_PLAIN);
                 allureAttachment.setContent(allureSteps.getResponse().asString());
