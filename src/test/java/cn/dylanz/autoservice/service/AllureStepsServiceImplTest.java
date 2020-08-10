@@ -3,7 +3,7 @@ package cn.dylanz.autoservice.service;
 import cn.dylanz.autoservice.constant.RequestMethodEnum;
 import cn.dylanz.autoservice.domain.AllureAttachment;
 import cn.dylanz.autoservice.domain.AllureSteps;
-import cn.dylanz.autoservice.util.asserts.Assert;
+import org.junit.Assert;
 import io.restassured.RestAssured;
 import io.restassured.config.ConnectionConfig;
 import io.restassured.config.RestAssuredConfig;

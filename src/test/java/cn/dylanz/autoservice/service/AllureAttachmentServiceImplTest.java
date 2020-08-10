@@ -3,7 +3,7 @@ package cn.dylanz.autoservice.service;
 import cn.dylanz.autoservice.constant.AllureAttachmentFileExtensionEnum;
 import cn.dylanz.autoservice.constant.AllureAttachmentTypeEnum;
 import cn.dylanz.autoservice.domain.AllureAttachment;
-import cn.dylanz.autoservice.util.asserts.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
