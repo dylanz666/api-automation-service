@@ -3,6 +3,9 @@ package cn.dylanz.autoservice.util.base;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 
@@ -10,8 +13,9 @@ import java.io.FileOutputStream;
  * @author : dylanz
  * @since : 08/05/2020
  **/
+@Service
 public class ExcelUtil {
-//    private static Logger logger = Logger.getLogger(ExcelUtil.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Create excel
@@ -21,7 +25,7 @@ public class ExcelUtil {
      * @param content:   Content that will put to sheet
      * @param filePath:  filePath that you want to save excel
      */
-    public static void createExcel(String sheetName, String[] title, String[][] content, String filePath) {
+    public void createExcel(String sheetName, String[] title, String[][] content, String filePath) {
         try {
             //Step 1: Create a HSSFWorkbook, this stands for the whole excel file
             Workbook wb = filePath.endsWith(".xlsx") ? new XSSFWorkbook() : new HSSFWorkbook();
@@ -71,20 +75,20 @@ public class ExcelUtil {
      * @param wb:       workbook
      * @param filePath: file path that you want to save your excel
      */
-    private static void writeToFile(Workbook wb, String filePath) {
+    private void writeToFile(Workbook wb, String filePath) {
         try {
             if (wb == null) {
-//                logger.error("Invalid Workbook!");
+                logger.error("Invalid Workbook!");
                 return;
             }
             if (filePath == null || filePath.equals("")) {
-//                logger.error("Invalid filePath!");
+                logger.error("Invalid filePath!");
                 return;
             }
             FileOutputStream output = new FileOutputStream(filePath);
             wb.write(output);
             output.close();
-//            logger.info("Excel file is saved to " + filePath);
+            logger.info("Excel file is saved to " + filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }

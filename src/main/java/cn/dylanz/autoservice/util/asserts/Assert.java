@@ -4,6 +4,7 @@ import cn.dylanz.autoservice.domain.AllureAttachment;
 import cn.dylanz.autoservice.service.AllureAttachmentServiceImpl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  **/
 @Service
 public class Assert extends org.testng.Assert {
-    private static AllureAttachment allureAttachment = new AllureAttachment();
-    private static AllureAttachmentServiceImpl allureAttachmentService = new AllureAttachmentServiceImpl();
+    @Autowired
+    private static AllureAttachment allureAttachment;
+    @Autowired
+    private static AllureAttachmentServiceImpl allureAttachmentService;
 
     public static void assertTrue(boolean condition, String message) {
         allureAttachment.setName("Assert");

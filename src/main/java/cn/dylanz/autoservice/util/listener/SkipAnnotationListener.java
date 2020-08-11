@@ -4,6 +4,7 @@ import cn.dylanz.autoservice.util.annotation.Skip;
 import cn.dylanz.autoservice.util.base.DateUtil;
 import cn.dylanz.autoservice.util.senior.ConfigUtil;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.IAnnotationTransformer;
 import org.testng.IRetryAnalyzer;
 import org.testng.annotations.ITestAnnotation;
@@ -16,12 +17,17 @@ import java.lang.reflect.Method;
  * @since : 08/05/2020
  **/
 public class SkipAnnotationListener implements IAnnotationTransformer {
-    private static String env = ConfigUtil.getEnv();
+    @Autowired
+    private ConfigUtil configUtil;
     private static ITestAnnotation testAnnotation;
+
+    @Autowired
+    private DateUtil dateUtil;
 
     @Override
     public void transform(ITestAnnotation iTestAnnotation, Class testClass, Constructor testConstructor,
                           Method testMethod) {
+        String env = configUtil.getEnv();
         testAnnotation = iTestAnnotation;
         if (!iTestAnnotation.getEnabled()) {
             return;
@@ -45,17 +51,17 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
         if (annotation.env().length == 0) {
             if (!beforeDate.equals("")) {
                 DateTime beforeDateTime = new DateTime(beforeDate);
-                int days = DateUtil.getDaysBetween(todayStartDateTime, beforeDateTime);
+                int days = dateUtil.getDaysBetween(todayStartDateTime, beforeDateTime);
                 iTestAnnotation.setEnabled(days < 0);
             }
             if (!whenDate.equals("")) {
                 DateTime whenDateTime = new DateTime(whenDate);
-                int days = DateUtil.getDaysBetween(todayStartDateTime, whenDateTime);
+                int days = dateUtil.getDaysBetween(todayStartDateTime, whenDateTime);
                 iTestAnnotation.setEnabled(days != 0);
             }
             if (!afterDate.equals("")) {
                 DateTime afterDateTime = new DateTime(afterDate);
-                int days = DateUtil.getDaysBetween(todayStartDateTime, afterDateTime);
+                int days = dateUtil.getDaysBetween(todayStartDateTime, afterDateTime);
                 iTestAnnotation.setEnabled(days > 0);
             }
 
@@ -75,7 +81,7 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
             if (env.equals(skipEnv)) {
                 if (!beforeDate.equals("")) {
                     DateTime beforeDateTime = new DateTime(beforeDate);
-                    int days = DateUtil.getDaysBetween(todayStartDateTime, beforeDateTime);
+                    int days = dateUtil.getDaysBetween(todayStartDateTime, beforeDateTime);
                     iTestAnnotation.setEnabled(days < 0);
 
                     setRetryListener();
@@ -83,7 +89,7 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
                 }
                 if (!whenDate.equals("")) {
                     DateTime whenDateTime = new DateTime(whenDate);
-                    int days = DateUtil.getDaysBetween(todayStartDateTime, whenDateTime);
+                    int days = dateUtil.getDaysBetween(todayStartDateTime, whenDateTime);
                     iTestAnnotation.setEnabled(days != 0);
 
                     setRetryListener();
@@ -91,7 +97,7 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
                 }
                 if (!afterDate.equals("")) {
                     DateTime afterDateTime = new DateTime(afterDate);
-                    int days = DateUtil.getDaysBetween(todayStartDateTime, afterDateTime);
+                    int days = dateUtil.getDaysBetween(todayStartDateTime, afterDateTime);
                     iTestAnnotation.setEnabled(days > 0);
 
                     setRetryListener();
@@ -103,7 +109,7 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
         }
     }
 
-    private static void setRetryListener() {
+    private void setRetryListener() {
         if (testAnnotation.getEnabled()) {
             IRetryAnalyzer retry = testAnnotation.getRetryAnalyzer();
             if (retry == null) {

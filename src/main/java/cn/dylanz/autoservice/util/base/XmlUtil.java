@@ -3,6 +3,7 @@ package cn.dylanz.autoservice.util.base;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author : dylanz
  * @since : 08/05/2020
  **/
+@Service
 public class XmlUtil {
     public static String getElementText(String xml, String path) throws Exception {
         Element element = getElement(xml, path);

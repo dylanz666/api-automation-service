@@ -3,6 +3,7 @@ package cn.dylanz.autoservice.util.base;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author : dylanz
  * @since : 08/05/2020
  **/
+@Service
 public class JSONArrayUtil {
     public static String join(String charSequence, JSONArray jsonArray) {
         List<String> list = new ArrayList<>();

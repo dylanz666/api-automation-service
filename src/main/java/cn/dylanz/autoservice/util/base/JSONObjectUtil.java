@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import io.restassured.response.Response;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : dylanz
  * @since : 08/05/2020
  **/
+@Service
 public class JSONObjectUtil {
     public static String getValue(String json, String path) {
         try {

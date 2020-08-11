@@ -2,13 +2,17 @@ package cn.dylanz.autoservice.util.senior;
 
 import cn.dylanz.autoservice.util.base.FileUtil;
 import com.alibaba.fastjson.JSONPath;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : dylanz
  * @since : 06/12/2020
  **/
 public class SqlUtil {
-    public static String getSql(String sourceFileName, String sqlName) throws Exception {
+    @Autowired
+    private FileUtil fileUtil;
+
+    public String getSql(String sourceFileName, String sqlName) throws Exception {
         if (null == sourceFileName) {
             throw new Exception("Null source file name!");
         }
@@ -20,7 +24,7 @@ public class SqlUtil {
         }
 
         sourceFileName = sourceFileName.replace(".java", "");
-        String bodyString = FileUtil.readSqlFromFile(sourceFileName);
+        String bodyString = fileUtil.readSqlFromFile(sourceFileName);
         return JSONPath.read(bodyString, "$." + sqlName).toString();
     }
 }

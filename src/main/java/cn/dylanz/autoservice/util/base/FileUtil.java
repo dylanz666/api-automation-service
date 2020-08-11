@@ -1,6 +1,9 @@
 package cn.dylanz.autoservice.util.base;
 
 import cn.dylanz.autoservice.util.senior.EnvUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
@@ -9,8 +12,9 @@ import java.net.URL;
  * @author : dylanz
  * @since : 06/12/2020
  **/
+@Service
 public class FileUtil {
-//    private static Logger logger = Logger.getLogger(FileUtil.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * read request body from file
@@ -18,7 +22,7 @@ public class FileUtil {
      * @param env:      run time env
      * @param fileName: body file name in body/*
      */
-    public static String readRequestBodyFromFile(String env, String fileName) throws Exception {
+    public String readRequestBodyFromFile(String env, String fileName) throws Exception {
         if (null == env) {
             throw new Exception("Null env name!");
         }
@@ -47,7 +51,7 @@ public class FileUtil {
      * @param env:      run time env
      * @param fileName: xml body file name in body/*
      */
-    public static String readXmlBodyFromFile(String env, String fileName) throws Exception {
+    public String readXmlBodyFromFile(String env, String fileName) throws Exception {
         if (null == env) {
             throw new Exception("Null env name!");
         }
@@ -75,7 +79,7 @@ public class FileUtil {
      *
      * @param env: env file name in config/*
      */
-    public static String readConfigInfoFromFile(String env) throws Exception {
+    public String readConfigInfoFromFile(String env) throws Exception {
         if (null == env) {
             throw new Exception("Null env name!");
         }
@@ -101,7 +105,7 @@ public class FileUtil {
      * @param env:      run time env
      * @param fileName: test data file name in data/cm/* or data/qp/* or data/pr/*
      */
-    public static String readTestDataFromFile(String env, String fileName) throws Exception {
+    public String readTestDataFromFile(String env, String fileName) throws Exception {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
@@ -126,7 +130,7 @@ public class FileUtil {
      *
      * @param fileName: table name in resources/sql/*
      */
-    public static String readSqlFromFile(String fileName) throws Exception {
+    public String readSqlFromFile(String fileName) throws Exception {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
@@ -150,7 +154,7 @@ public class FileUtil {
      *
      * @param fileName: file name which in resources/*
      */
-    public static File getResourceFile(String fileName) throws Exception {
+    public File getResourceFile(String fileName) throws Exception {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
@@ -169,7 +173,7 @@ public class FileUtil {
      * @param source:source folder path
      * @param target:target folder path
      */
-    public static void copyFolder(String source, String target, Boolean createFolderWhenNotExisted) throws Exception {
+    public void copyFolder(String source, String target, Boolean createFolderWhenNotExisted) throws Exception {
         File sourceFile = new File(source);
         if (!sourceFile.isDirectory()) {
             System.out.println("Invalid source folder,stop copy folder!");
@@ -208,7 +212,7 @@ public class FileUtil {
      * @param sourceFile:source file
      * @param targetFile:target file
      */
-    public static void copyFile(File sourceFile, File targetFile) throws Exception {
+    public void copyFile(File sourceFile, File targetFile) throws Exception {
         BufferedInputStream bis = new BufferedInputStream(new FileInputStream(sourceFile));
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(targetFile));
         int i = -1;
@@ -226,7 +230,7 @@ public class FileUtil {
      * @param sourceFilePath:source file path
      * @param sourceFilePath:target file path
      */
-    public static void copyFile(String sourceFilePath, String targetFilePath) throws Exception {
+    public void copyFile(String sourceFilePath, String targetFilePath) throws Exception {
         File sourceFile = new File(sourceFilePath);
         if (!sourceFile.isFile() || !sourceFile.exists()) {
             throw new Exception("Invalid source file:" + sourceFile.getAbsolutePath());
@@ -247,7 +251,7 @@ public class FileUtil {
         bos.close();
     }
 
-    public static Boolean deleteFilesOrFolders(String path, Boolean deleteFolder) {
+    public Boolean deleteFilesOrFolders(String path, Boolean deleteFolder) {
         File file = new File(path);
         if (!file.exists()) {
             return false;
@@ -272,20 +276,20 @@ public class FileUtil {
         return file.delete();
     }
 
-    public static Boolean deleteFilesAndFolders(String path) {
+    public Boolean deleteFilesAndFolders(String path) {
         return deleteFilesOrFolders(path, true);
     }
 
-    public static Boolean deleteAllFiles(String path) {
+    public Boolean deleteAllFiles(String path) {
         return deleteFilesOrFolders(path, false);
     }
 
-    public static void createFile(String data, String filePath) {
+    public void createFile(String data, String filePath) {
         try {
             FileOutputStream output = new FileOutputStream(filePath);
             output.write(data.getBytes());
             output.close();
-//            logger.info("Create file to: " + filePath);
+            logger.info("Create file to: " + filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }

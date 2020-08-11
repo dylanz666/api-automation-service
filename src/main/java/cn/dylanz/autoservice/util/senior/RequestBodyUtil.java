@@ -3,26 +3,30 @@ package cn.dylanz.autoservice.util.senior;
 import cn.dylanz.autoservice.util.base.FileUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : dylanz
  * @since : 06/12/2020
  **/
 public class RequestBodyUtil {
-    private static String env = ConfigUtil.getEnv();
+    @Autowired
+    private ConfigUtil configUtil;
+    @Autowired
+    private FileUtil fileUtil;
 
-    public static String getBody(String bodyName) {
+    public String getBody(String bodyName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
         Object bodyObject = getBodyObject(bodyName, stackTrace);
         return (bodyObject != null) ? bodyObject.toString() : null;
     }
 
-    public static JSONObject getBodyObject(String bodyName) {
+    public JSONObject getBodyObject(String bodyName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
         return (JSONObject) getBodyObject(bodyName, stackTrace);
     }
 
-    private static Object getBodyObject(String bodyName, StackTraceElement stackTrace) {
+    private Object getBodyObject(String bodyName, StackTraceElement stackTrace) {
         try {
             if (stackTrace == null) {
                 stackTrace = new Exception().getStackTrace()[1];
@@ -41,7 +45,7 @@ public class RequestBodyUtil {
             if (null == bodyName) {
                 throw new Exception("Null body name!");
             }
-            String bodyString = FileUtil.readRequestBodyFromFile(env, filePath);
+            String bodyString = fileUtil.readRequestBodyFromFile(configUtil.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + bodyName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,16 +53,16 @@ public class RequestBodyUtil {
         }
     }
 
-    public static String getBodyWithFilePath(String filePath, String bodyName) {
+    public String getBodyWithFilePath(String filePath, String bodyName) {
         Object bodyObject = getBodyObjectWithPath(filePath, bodyName);
         return (bodyObject != null) ? bodyObject.toString() : null;
     }
 
-    public static JSONObject getBodyObjectWithFilePath(String filePath, String bodyName) {
+    public JSONObject getBodyObjectWithFilePath(String filePath, String bodyName) {
         return (JSONObject) getBodyObjectWithPath(filePath, bodyName);
     }
 
-    private static Object getBodyObjectWithPath(String filePath, String bodyName) {
+    private Object getBodyObjectWithPath(String filePath, String bodyName) {
         try {
             if (null == filePath) {
                 throw new Exception("Null file path!");
@@ -71,7 +75,7 @@ public class RequestBodyUtil {
             }
 
             filePath = filePath.replaceAll("\\.", "/");
-            String bodyString = FileUtil.readRequestBodyFromFile(env, filePath);
+            String bodyString = fileUtil.readRequestBodyFromFile(configUtil.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + bodyName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +83,7 @@ public class RequestBodyUtil {
         }
     }
 
-    public static String getXmlBody(String fileName) {
+    public String getXmlBody(String fileName) {
         try {
             StackTraceElement stackTrace = new Exception().getStackTrace()[1];
             String sourceFileName = stackTrace.getFileName();
@@ -98,7 +102,7 @@ public class RequestBodyUtil {
             }
 
             filePath += "/" + fileName;
-            return FileUtil.readXmlBodyFromFile(env, filePath);
+            return fileUtil.readXmlBodyFromFile(configUtil.getEnv(), filePath);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

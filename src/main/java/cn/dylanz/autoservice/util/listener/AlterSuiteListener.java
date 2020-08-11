@@ -2,6 +2,7 @@ package cn.dylanz.autoservice.util.listener;
 
 import cn.dylanz.autoservice.util.base.FileUtil;
 import cn.dylanz.autoservice.util.senior.ConfigUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.IAlterSuiteListener;
 import org.testng.xml.*;
 
@@ -14,6 +15,11 @@ import java.util.List;
  * @since : 08/05/2020
  **/
 public class AlterSuiteListener implements IAlterSuiteListener {
+    @Autowired
+    private FileUtil fileUtil;
+    @Autowired
+    private ConfigUtil configUtil;
+
     @Override
     public void alter(List<XmlSuite> suites) {
         File file = new File("src/test/java/com/ehi");
@@ -21,7 +27,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
         String teamName = files == null ? "" : "." + files[0].getName();
 
         //delete test result files in allure-results folder
-        FileUtil.deleteAllFiles("allure-results");
+        fileUtil.deleteAllFiles("allure-results");
 
         XmlSuite suite = suites.get(0);
         XmlTest xmlTest = new XmlTest(suite);
@@ -33,7 +39,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 
         //We are not using parallel to run test cases on BO PROD
         //If you want to run in parallel on your PROD, please delete below 4 lines of code
-        String env = ConfigUtil.getEnv();
+        String env = configUtil.getEnv();
         if (env.equals("pr")) {
             xmlTest.setThreadCount(1);
         }

@@ -4,31 +4,35 @@ import cn.dylanz.autoservice.util.base.FileUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author : dylanz
  * @since : 06/12/2020
  **/
 public class TestDataUtil {
-    private static String env = ConfigUtil.getEnv();
+    @Autowired
+    private FileUtil fileUtil;
+    @Autowired
+    private ConfigUtil configUtil;
 
-    public static String getData(String dataName) {
+    public String getData(String dataName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
         Object dataObject = getDataObject(dataName, stackTrace);
         return (dataObject != null) ? dataObject.toString() : null;
     }
 
-    public static JSONObject getDataObject(String dataName) {
+    public JSONObject getDataObject(String dataName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
         return (JSONObject) getDataObject(dataName, stackTrace);
     }
 
-    public static JSONArray getDataArray(String dataName) {
+    public JSONArray getDataArray(String dataName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
         return (JSONArray) getDataObject(dataName, stackTrace);
     }
 
-    private static Object getDataObject(String dataName, StackTraceElement stackTrace) {
+    private Object getDataObject(String dataName, StackTraceElement stackTrace) {
         try {
             if (stackTrace == null) {
                 stackTrace = new Exception().getStackTrace()[1];
@@ -48,7 +52,7 @@ public class TestDataUtil {
                 throw new Exception("Null data name!");
             }
 
-            String bodyString = FileUtil.readTestDataFromFile(env, filePath);
+            String bodyString = fileUtil.readTestDataFromFile(configUtil.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + dataName);
         } catch (Exception e) {
             e.printStackTrace();
