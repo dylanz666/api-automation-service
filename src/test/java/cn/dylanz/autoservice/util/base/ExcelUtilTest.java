@@ -8,13 +8,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @author : dylanz
- * @since : 08/10/2020
+ * @since : 08/11/2020
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DateUtilTest {
+public class ExcelUtilTest {
     @Autowired
-    private DateUtil dateUtil;
+    private ExcelUtil excelUtil;
 
     @Test
     public void test() {
