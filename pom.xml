@@ -6,7 +6,7 @@
     <packaging>jar</packaging>
     <version>1.0.0</version>
     <name>api-automation-service</name>
-    <url>https://github.com/dylanz666</url>
+    <url>https://github.com/dylanz666/api-automation-service</url>
     <properties>
         <lombok.version>1.18.12</lombok.version>
         <fastjson.version>1.2.72</fastjson.version>
