@@ -4,7 +4,7 @@
     <groupId>com.github.dylanz666</groupId>
     <artifactId>api-automation-service</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>api-automation-service</name>
     <url>https://github.com/dylanz666/api-automation-service</url>
     <properties>

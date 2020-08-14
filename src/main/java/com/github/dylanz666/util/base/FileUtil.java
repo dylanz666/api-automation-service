@@ -1,6 +1,5 @@
 package com.github.dylanz666.util.base;
 
-import com.github.dylanz666.util.senior.EnvUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,6 @@ public class FileUtil {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
-        env = EnvUtil.convertAll(env);
         File file = getResourceFile("body/" + env + "/" + fileName + ".json");
 
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -58,7 +56,6 @@ public class FileUtil {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
-        env = EnvUtil.convertAll(env);
         File file = getResourceFile("body/" + env + "/" + fileName + ".xml");
 
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -83,7 +80,6 @@ public class FileUtil {
         if (null == env) {
             throw new Exception("Null env name!");
         }
-        env = EnvUtil.convertAll(env);
         File file = getResourceFile("config/" + env + ".json");
 
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -109,7 +105,6 @@ public class FileUtil {
         if (null == fileName) {
             throw new Exception("Null file name!");
         }
-        env = EnvUtil.convertAll(env);
         File file = getResourceFile("data/" + env + "/" + fileName + ".json");
 
         BufferedReader br = new BufferedReader(new FileReader(file));
