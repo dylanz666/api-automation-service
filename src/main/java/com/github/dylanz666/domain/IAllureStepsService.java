@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
  * @since : 08/05/2020
  **/
 @Service
-public interface IAllureReportService<T> {
+public interface IAllureStepsService<T> {
     Boolean addSteps(T AllureSteps);
 }

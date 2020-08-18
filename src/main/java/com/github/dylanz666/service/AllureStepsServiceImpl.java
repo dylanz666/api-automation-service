@@ -4,7 +4,7 @@ import com.github.dylanz666.constant.AllureAttachmentFileExtensionEnum;
 import com.github.dylanz666.constant.AllureAttachmentTypeEnum;
 import com.github.dylanz666.domain.AllureAttachment;
 import com.github.dylanz666.domain.AllureSteps;
-import com.github.dylanz666.domain.IAllureReportService;
+import com.github.dylanz666.domain.IAllureStepsService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,7 +19,7 @@ import java.util.List;
  * @since : 08/05/2020
  **/
 @Service
-public class AllureStepsServiceImpl implements IAllureReportService<AllureSteps> {
+public class AllureStepsServiceImpl implements IAllureStepsService<AllureSteps> {
     @Autowired
     private AllureAttachmentServiceImpl allureAttachmentService;
 
