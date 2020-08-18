@@ -22,7 +22,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 
     @Override
     public void alter(List<XmlSuite> suites) {
-        File file = new File("src/test/java/com/ehi");
+        File file = new File(System.getProperty("user.dir") + "\\src\\test\\java\\com\\ehi");
         File[] files = file.listFiles();
         String teamName = files == null ? "" : "." + files[0].getName();
 
@@ -37,13 +37,6 @@ public class AlterSuiteListener implements IAlterSuiteListener {
         String groupTag = System.getProperty("tag");
         String suiteName = System.getProperty("suite");
 
-        //We are not using parallel to run test cases on BO PROD
-        //If you want to run in parallel on your PROD, please delete below 4 lines of code
-        String env = runtime.getEnv();
-        if (env.equals("pr")) {
-            xmlTest.setThreadCount(1);
-        }
-
         //run by group
         if (groupTag != null && !groupTag.equals("")) {
             //set groups
@@ -56,14 +49,14 @@ public class AlterSuiteListener implements IAlterSuiteListener {
             }
 
             //run by package, this is for suite is ended with "*"
-            if (suiteName != null && !suiteName.equals("") && !suiteName.toLowerCase().equals("all") && suiteName.endsWith(".*")) {
+            if (!suiteName.equals("") && !suiteName.toLowerCase().equals("all") && suiteName.endsWith(".*")) {
                 XmlPackage xmlPackage = new XmlPackage("com.ehi" + teamName + ".testcases." + suiteName);
                 xmlTest.setPackages(Collections.singletonList(xmlPackage));
                 return;
             }
 
             //set class scope when both tag and suite have value
-            if (suiteName != null && !suiteName.equals("") && !suiteName.toLowerCase().equals("all")) {
+            if (!suiteName.equals("") && !suiteName.toLowerCase().equals("all")) {
                 suiteName = "com.ehi" + teamName + ".testcases." + suiteName;
                 xmlClass.setName(suiteName);
                 xmlTest.setClasses(Collections.singletonList(xmlClass));

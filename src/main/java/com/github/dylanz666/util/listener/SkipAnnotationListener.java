@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.IAnnotationTransformer;
 import org.testng.IRetryAnalyzer;
 import org.testng.annotations.ITestAnnotation;
+import org.testng.annotations.Ignore;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
@@ -32,6 +34,13 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
         if (!iTestAnnotation.getEnabled()) {
             return;
         }
+        //skip when @Ignore is existing in class
+        Annotation ignoreAnnotation = testClass.getAnnotation(Ignore.class);
+        if (ignoreAnnotation != null) {
+            iTestAnnotation.setEnabled(false);
+            return;
+        }
+
         Skip annotation = testMethod.getAnnotation(Skip.class);
         if (annotation == null) {
             setRetryListener();
