@@ -1,17 +1,20 @@
 package com.github.dylanz666.util.senior;
 
-import com.github.dylanz666.util.base.FileUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.github.dylanz666.domain.Runtime;
+import com.github.dylanz666.util.base.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : dylanz
  * @since : 06/12/2020
  **/
+@Service
 public class RequestBodyUtil {
     @Autowired
-    private ConfigUtil configUtil;
+    private Runtime runtime;
     @Autowired
     private FileUtil fileUtil;
 
@@ -45,7 +48,7 @@ public class RequestBodyUtil {
             if (null == bodyName) {
                 throw new Exception("Null body name!");
             }
-            String bodyString = fileUtil.readRequestBodyFromFile(configUtil.getEnv(), filePath);
+            String bodyString = fileUtil.readRequestBodyFromFile(runtime.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + bodyName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +78,7 @@ public class RequestBodyUtil {
             }
 
             filePath = filePath.replaceAll("\\.", "/");
-            String bodyString = fileUtil.readRequestBodyFromFile(configUtil.getEnv(), filePath);
+            String bodyString = fileUtil.readRequestBodyFromFile(runtime.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + bodyName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -102,7 +105,7 @@ public class RequestBodyUtil {
             }
 
             filePath += "/" + fileName;
-            return fileUtil.readXmlBodyFromFile(configUtil.getEnv(), filePath);
+            return fileUtil.readXmlBodyFromFile(runtime.getEnv(), filePath);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

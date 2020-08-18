@@ -1,20 +1,23 @@
 package com.github.dylanz666.util.senior;
 
-import com.github.dylanz666.util.base.FileUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.github.dylanz666.domain.Runtime;
+import com.github.dylanz666.util.base.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : dylanz
  * @since : 06/12/2020
  **/
+@Service
 public class TestDataUtil {
     @Autowired
     private FileUtil fileUtil;
     @Autowired
-    private ConfigUtil configUtil;
+    private Runtime runtime;
 
     public String getData(String dataName) {
         StackTraceElement stackTrace = new Exception().getStackTrace()[1];
@@ -52,7 +55,7 @@ public class TestDataUtil {
                 throw new Exception("Null data name!");
             }
 
-            String bodyString = fileUtil.readTestDataFromFile(configUtil.getEnv(), filePath);
+            String bodyString = fileUtil.readTestDataFromFile(runtime.getEnv(), filePath);
             return JSONPath.read(bodyString, "$." + dataName);
         } catch (Exception e) {
             e.printStackTrace();
