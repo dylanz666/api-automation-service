@@ -62,7 +62,7 @@ public class ExcelUtil {
                     }
                 }
             }
-//            logger.info("Excel workbook is created!");
+            logger.info("Excel workbook is created!");
             writeToFile(wb, filePath);
         } catch (Exception e) {
             e.printStackTrace();

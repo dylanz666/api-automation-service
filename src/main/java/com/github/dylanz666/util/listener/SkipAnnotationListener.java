@@ -1,8 +1,8 @@
 package com.github.dylanz666.util.listener;
 
+import com.github.dylanz666.domain.Runtime;
 import com.github.dylanz666.util.annotation.Skip;
 import com.github.dylanz666.util.base.DateUtil;
-import com.github.dylanz666.util.senior.ConfigUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.IAnnotationTransformer;
@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
  **/
 public class SkipAnnotationListener implements IAnnotationTransformer {
     @Autowired
-    private ConfigUtil configUtil;
+    private Runtime runtime;
     private static ITestAnnotation testAnnotation;
 
     @Autowired
@@ -27,7 +27,7 @@ public class SkipAnnotationListener implements IAnnotationTransformer {
     @Override
     public void transform(ITestAnnotation iTestAnnotation, Class testClass, Constructor testConstructor,
                           Method testMethod) {
-        String env = configUtil.getEnv();
+        String env = runtime.getEnv();
         testAnnotation = iTestAnnotation;
         if (!iTestAnnotation.getEnabled()) {
             return;

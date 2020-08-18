@@ -1,7 +1,7 @@
 package com.github.dylanz666.util.listener;
 
+import com.github.dylanz666.domain.Runtime;
 import com.github.dylanz666.util.base.FileUtil;
-import com.github.dylanz666.util.senior.ConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.IAlterSuiteListener;
 import org.testng.xml.*;
@@ -18,7 +18,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
     @Autowired
     private FileUtil fileUtil;
     @Autowired
-    private ConfigUtil configUtil;
+    private Runtime runtime;
 
     @Override
     public void alter(List<XmlSuite> suites) {
@@ -39,7 +39,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 
         //We are not using parallel to run test cases on BO PROD
         //If you want to run in parallel on your PROD, please delete below 4 lines of code
-        String env = configUtil.getEnv();
+        String env = runtime.getEnv();
         if (env.equals("pr")) {
             xmlTest.setThreadCount(1);
         }
