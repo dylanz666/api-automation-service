@@ -4,11 +4,10 @@
     <groupId>com.github.dylanz666</groupId>
     <artifactId>api-automation-service</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <name>api-automation-service</name>
     <url>https://github.com/dylanz666/api-automation-service</url>
     <properties>
-        <lombok.version>1.18.12</lombok.version>
         <fastjson.version>1.2.72</fastjson.version>
         <joda.version>2.10.5</joda.version>
         <poi.version>4.1.2</poi.version>
@@ -123,7 +122,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
